@@ -1,0 +1,35 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # required to federate the OIDC token, this job is allowed to request an id
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 #grab the entire commit history for semantic versioning reasons
+
+      - name: Mint token via Octo STS
+        id: octo-sts
+        uses: octo-sts/action@main #actually requesting id
+        with:
+          scope: laurenrunion/semVer #release sts file in chainguard has to match, if it does it gives permissions
+          identity: release
+
+      - uses: actions/setup-node@v7 #needed for semantic release to run
+        with:
+          node-version: 20
+
+      - name: Release # reads .releaserc.json and runs plugins with auth
+        env:
+          GITHUB_TOKEN: ${{ steps.octo-sts.outputs.token }}
+        run: npx semantic-release
