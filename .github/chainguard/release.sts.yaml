@@ -1,5 +1,5 @@
 issuer: https://token.actions.githubusercontent.com
-subject_pattern: "repo:laurenrunion/semVer:ref:refs/heads/main"
+subject: "repo:laurenrunion@295933000/semVer@1393357388:ref:refs/heads/main"
 permissions:
   contents: write
   issues: write
