@@ -28,7 +28,7 @@ jobs:
 
       - uses: actions/setup-node@v7 #needed for semantic release to run
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Release # reads .releaserc.json and runs plugins with auth
         env:
