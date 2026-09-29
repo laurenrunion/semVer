@@ -17,6 +17,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0 #grab the entire commit history for semantic versioning reasons
+          persist-credentials: false
 
       - name: Mint token via Octo STS
         id: octo-sts
@@ -27,7 +28,7 @@ jobs:
 
       - uses: actions/setup-node@v7 #needed for semantic release to run
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Release # reads .releaserc.json and runs plugins with auth
         env:
